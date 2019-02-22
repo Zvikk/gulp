@@ -4,6 +4,8 @@ const sourcemaps = require('gulp-sourcemaps');
 const plumber = require('gulp-plumber');
 const browserSync = require('browser-sync').create();
 const del = require('del');
+const autoprefixer = require('gulp-autoprefixer');
+const babel = require('gulp-babel');
 
 /* paths */
 
@@ -17,6 +19,10 @@ function styles() {
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass())
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
         .pipe(sourcemaps.write('/'))
         .pipe(dest(path.build + 'styles'))
 }
@@ -30,6 +36,9 @@ function htmls() {
 function scripts() {
     return src(path.src + 'js/**/*.js')
         .pipe(plumber())
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
         .pipe(dest(path.build + 'js/'))
 }
 
@@ -45,6 +54,7 @@ function serve() {
 function watcher() {
     watch(path.src + 'styles/**/*', styles);
     watch(path.src + '**/*.html', htmls);
+    watch(path.src + 'js/**/*.js', scripts);
 }
 
 function clean() {
