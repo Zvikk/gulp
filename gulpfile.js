@@ -73,3 +73,14 @@ exports.dev = series(
     parallel(styles, htmls, scripts),
     parallel(watcher, serve)
 );
+
+exports.default = series(
+    clean,
+    parallel(styles, htmls, scripts),
+    parallel(watcher, serve)
+);
+
+exports.build = series(
+    clean,
+    parallel(styles, htmls, scripts)
+);

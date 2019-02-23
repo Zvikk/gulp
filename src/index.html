@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles/main.css">
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+		<link rel="stylesheet" href="styles/main.css" />
+	</head>
+	<body>
+		<div class="wrapper">
+			<span>
+                Source paths: /src/
+                <ul>
+                    <li>stlyes/main.css - includes files</li>
+                    <li>stlyes/blocks/*.scss - bem blocks folder</li>
+                    <li>stlyes/utils/*.scss - utils styles (exm.: fonts, variables)</li>
+                </ul>
+            </span>
 
-    <button class="myButton">таймер</button>
-    <button class="btn">Load image</button>
-    <script src="js/main.js"></script>
-</body>
+            <span>
+                Build paths: /src/  //yarn build or gulp build
+            </span>
+		</div>
+	</body>
 </html>
