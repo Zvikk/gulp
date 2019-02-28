@@ -1,1 +1,1 @@
-console.log('true', true);
+console.log('from main', true);

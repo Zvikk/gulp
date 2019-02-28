@@ -6,12 +6,18 @@ const browserSync = require('browser-sync').create();
 const del = require('del');
 const autoprefixer = require('gulp-autoprefixer');
 const babel = require('gulp-babel');
+const cleanCSS = require('gulp-clean-css');
+const concat = require('gulp-concat');
 
 /* paths */
-
 const path = {
-    src: './src/', //source
-    build: './build/' //build
+    src: './src/', //source folder
+    build: './build/' //build folder
+}
+
+function public() {
+    return src(path.src + 'public/**/*')
+        .pipe(dest(path.build));
 }
 
 function styles() {
@@ -24,6 +30,7 @@ function styles() {
             cascade: false
         }))
         .pipe(sourcemaps.write('/'))
+        .pipe(cleanCSS())
         .pipe(dest(path.build + 'styles'))
 }
 
@@ -36,6 +43,7 @@ function htmls() {
 function scripts() {
     return src(path.src + 'js/**/*.js')
         .pipe(plumber())
+        .pipe(concat('bundle.js'))
         .pipe(babel({
             presets: ['@babel/env']
         }))
@@ -53,6 +61,7 @@ function serve() {
 
 function watcher() {
     watch(path.src + 'styles/**/*', styles);
+    watch(path.src + 'public/**/*', public);
     watch(path.src + '**/*.html', htmls);
     watch(path.src + 'js/**/*.js', scripts);
 }
@@ -61,6 +70,7 @@ function clean() {
     return del('build/');
 }
 
+exports.public = public;
 exports.styles = styles;
 exports.htmls = htmls;
 exports.scripts = scripts;
@@ -70,17 +80,17 @@ exports.clean = clean
 
 exports.dev = series(
     clean,
-    parallel(styles, htmls, scripts),
+    parallel(public, styles, htmls, scripts),
     parallel(watcher, serve)
 );
 
 exports.default = series(
     clean,
-    parallel(styles, htmls, scripts),
+    parallel(public, styles, htmls, scripts),
     parallel(watcher, serve)
 );
 
 exports.build = series(
     clean,
-    parallel(styles, htmls, scripts)
+    parallel(public, styles, htmls, scripts)
 );

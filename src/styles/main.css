@@ -1,1 +1,3 @@
-@import 'utils/def'
+@import 'utils/def';
+@import 'utils/_variables.scss';
+@import 'utils/_fonts';
